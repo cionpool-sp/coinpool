@@ -5,127 +5,244 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>運用実績レポート | CoinPool</title>
     <style>
-        /* Q&Aサイトの配色・スタイルを再現 */
-        body{
-            margin:0;
+        body {
+            margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
-            background:#0f172a; /* ダークネイビー背景 */
-            color:#f1f5f9;
-            line-height:1.8;
+            background: #0f172a; /* image_0.png準拠の背景色 */
+            color: #f1f5f9;
+            line-height: 1.6;
         }
-        .container{
-            max-width:900px;
-            margin:auto;
-            padding:20px;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
-        h1{
-            text-align:center;
-            margin-bottom:30px;
+        h1 {
+            text-align: center;
             color: #38bdf8; /* 水色アクセント */
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+        /* カード全体のスタイル */
+        .card {
+            background: #1e293b; /* image_0.png準拠のカード色 */
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid #334155;
+            position: relative;
+            overflow: hidden;
         }
         h2 {
-            font-size: 1.2rem;
-            border-left: 4px solid #38bdf8;
-            padding-left: 15px;
-            margin-top: 40px;
+            font-size: 1.25rem;
+            color: #f1f5f9;
+            margin-top: 0;
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        /* カードスタイルのレイアウト */
-        .card {
-            background:#1e293b;
-            border-radius:10px;
-            margin-bottom:15px;
-            padding: 25px;
-            border: 1px solid #334155;
+        /* 検証条件のグリッド */
+        .cond-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
         }
-        .summary-box {
+        .cond-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .cond-label { color: #94a3b8; margin-right: 8px; }
+        .cond-value { font-weight: bold; color: #f1f5f9; }
+
+        /* 実績数値とビジュアル */
+        .result-layout {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        .result-stats { flex: 1; }
+        .result-visual { flex: 1; text-align: center; }
+
+        .stat-box { margin-bottom: 15px; }
+        .stat-label { font-size: 0.9rem; color: #94a3b8; display: block; }
+        .stat-value { font-size: 1.8rem; font-weight: bold; }
+        
+        .growth-badge {
+            display: inline-block;
+            background: #fbbf24; /* オレンジイエロー */
+            color: #0f172a;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        /* 簡易グラフ風バー */
+        .chart-bar-bg {
+            height: 12px;
+            background: #0f172a;
+            border-radius: 6px;
+            position: relative;
+            margin-top: 10px;
+        }
+        .chart-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* 比較セクション */
+        .comparison-layout {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .comp-item {
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .vs-circle {
+            width: 50px;
+            height: 50px;
+            background: #334155;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+
+        /* 結論の強調表示 */
+        .conclusion-box {
             background: rgba(56, 189, 248, 0.1);
             border: 1px solid #38bdf8;
             padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-        .data-list {
-            list-style: none;
-            padding: 0;
-        }
-        .data-list li {
-            background: #0f172a;
-            margin-bottom: 10px;
-            padding: 15px;
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .data-label {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-        .data-value {
-            font-weight: bold;
-            color: #38bdf8;
-        }
-        .highlight {
-            color: #fbbf24; /* オレンジ・イエローの強調 */
-            font-weight: bold;
-        }
-        .footer {
+            border-radius: 10px;
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            font-size: 0.8rem;
-            color: #64748b;
+            margin-top: 25px;
         }
-        .note-text {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-top: 10px;
+
+        /* 外部リンクボタン */
+        .btn-link {
+            display: block;
+            width: fit-content;
+            margin: 40px auto;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn-link:hover { background: #7dd3fc; }
+
+        .note { font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 20px;}
+
+        /* アイコンの簡易代替 */
+        .icon-stub { display: inline-block; width: 1em; text-align: center; color: #38bdf8; margin-right: 5px;}
+
+        @media (max-width: 650px) {
+            .result-layout, .comparison-layout { flex-direction: column; grid-template-columns: 1fr; }
+            .vs-circle { margin: 10px auto; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>運用実績レポート</h1>
 
-        <div class="summary-box">
-            <strong>対象ペア: Base「cbBTC/ETH V3 0.3%」</strong><br>
-            検証期間: 2025/02/06 〜 2026/02/06
-            <p style="margin-top:10px; font-size: 0.9rem;">Baseチェーンにて1,000ドル規模の流動性供給を行った際の年間推移データです。</p>
-        </div>
+<div class="container">
+    <h1>1年間検証レポート</h1>
+    <p class="subtitle">Baseチェーン cbBTC/ETH V3 0.3%</p>
 
-        <div class="card">
-            <h2>運用パフォーマンス</h2>
-            <ul class="data-list">
-                <li><span class="data-label">初期投資額</span><span class="data-value">1,000 USD</span></li>
-                <li><span class="data-label">監視間隔</span><span class="data-value">1時間ごと</span></li>
-                <li><span class="data-label">再投資（リリポジション）条件</span><span class="data-value">レンジ幅（±5%）逸脱時</span></li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>レンジ設定と収益目安</h2>
-            <p>平均的な設定レンジ幅に応じた、獲得報酬の期待値です。</p>
-            <ul class="data-list">
-                <li><span class="data-label">±40% 設定の場合</span><span class="data-value">報酬の約 80%</span></li>
-                <li><span class="data-label">±30% 設定の場合</span><span class="data-value">報酬の約 61%</span></li>
-                <li><span class="data-label">±20% 設定の場合</span><span class="data-value">報酬の約 40%</span></li>
-                <li><span class="data-label">±10% 設定の場合</span><span class="data-value">報酬の約 20%</span></li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>重要事項</h2>
-            <p>CoinPoolのシステムは、価格がレンジを突破した時点で評価額を確定させ、その地点を中心に <span class="highlight">50:50の比率で自動再投資</span> を行います。</p>
-            <div class="note-text">
-                ※本データにスワップ手数料は含まれておりません。<br>
-                ※リポジション時にはスリッページの影響を受ける可能性があります。
-            </div>
-        </div>
-
-        <div class="footer">
-            © CoinPool / Performance Report
+    <div class="card">
+        <h2><span class="icon-stub">📋</span>検証条件</h2>
+        <div class="cond-grid">
+            <div class="cond-item"><span class="cond-label">ペア:</span><span class="cond-value">cbBTC / ETH</span></div>
+            <div class="cond-item"><span class="cond-label">プール:</span><span class="cond-value">Uniswap V3 0.3%</span></div>
+            <div class="cond-item"><span class="cond-label">レンジ:</span><span class="cond-value">±5%</span></div>
+            <div class="cond-item"><span class="cond-label">期間:</span><span class="cond-value">365日間</span></div>
+            <div class="cond-item"><span class="cond-label">初期資金:</span><span class="cond-value">1,000ドル</span></div>
+            <div class="cond-item"><span class="cond-label">リポジション:</span><span class="cond-value">70回/年</span></div>
         </div>
     </div>
+
+    <div class="card">
+        <h2><span class="icon-stub">📈</span>運用結果（流動性提供）</h2>
+        <div class="result-layout">
+            <div class="result-stats">
+                <div class="stat-box">
+                    <span class="stat-label">初期資金</span>
+                    <span class="stat-value" style="font-size: 1.2rem; color: #94a3b8;">1,000ドル</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">累計手数料収益</span>
+                    <span class="stat-value" style="color: #10b981;">+3,303.57ドル</span>
+                </div>
+            </div>
+            <div class="result-visual">
+                <span class="stat-label">最終資産合計</span>
+                <span class="stat-value" style="color: #fbbf24;">3,906.06ドル</span>
+                <span class="growth-badge">約3.9倍</span>
+                <div class="chart-bar-bg">
+                    <div class="chart-bar-fill" style="width: 100%; background: #fbbf24;"></div>
+                    <div class="chart-bar-fill" style="width: 25%; background: #64748b;"></div> </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #64748b; margin-top: 5px;">
+                    <span>$1,000</span>
+                    <span>$3,906</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2><span class="icon-stub">⚖️</span>パフォーマンス比較</h2>
+        <div class="comparison-layout">
+            <div class="comp-item">
+                <span class="stat-label">単純保有（ガチホ）</span>
+                <span class="stat-value" style="color: #94a3b8; font-size: 1.4rem;">約670ドル</span>
+                <div class="chart-bar-bg" style="margin-top: 15px;">
+                    <div class="chart-bar-fill" style="width: 17%; background: #64748b;"></div> </div>
+            </div>
+            <div class="vs-circle">VS</div>
+            <div class="comp-item" style="border: 1px solid #fbbf24;">
+                <span class="stat-label" style="color: #fbbf24;">CoinPool型運用</span>
+                <span class="stat-value" style="color: #fbbf24; font-size: 1.4rem;">3,906.06ドル</span>
+                <div class="chart-bar-bg" style="margin-top: 15px;">
+                    <div class="chart-bar-fill" style="width: 100%; background: #fbbf24;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="conclusion-box">
+            資産成長に <span style="font-size: 1.6rem; font-weight: bold; color: #fbbf24;">約5.8倍</span> の差がつきました。
+        </div>
+    </div>
+
+    <a href="https://docs.google.com/spreadsheets/d/1Hgz2ikWBre0xP1paMGIlCdNKl33stJNY/edit?gid=994495645#gid=994495645" class="btn-link" target="_blank">
+        実際の検証データをスプレッドシートで見る
+    </a>
+
+    <div class="note">
+        ※2025/2/6〜2026/2/6（365日）のデータを元にした検証結果です。<br>
+        ※レンジ外時は50:50へリポジション。
+    </div>
+</div>
+
 </body>
 </html>

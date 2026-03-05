@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>運用実績レポート | CoinPool</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        .container { background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #004a99; border-bottom: 2px solid #004a99; padding-bottom: 10px; }
+        h2 { color: #2c3e50; margin-top: 30px; }
+        .summary-box { background: #e7f3ff; border-left: 5px solid #004a99; padding: 15px; margin: 20px 0; }
+        .data-list { list-style: none; padding: 0; }
+        .data-list li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .data-list li::before { content: "●"; position: absolute; left: 0; color: #004a99; }
+        .note { font-size: 0.9em; color: #666; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
+        .highlight { font-weight: bold; color: #d9534f; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>運用実績レポート</h1>
+        <p><strong>対象ペア:</strong> Base「cbBTC/ETH V3 0.3%」</p>
+        <p><strong>検証期間:</strong> 2025/02/06 〜 2026/02/06</p>
+
+        <div class="summary-box">
+            <p>このページでは、1,000ドル規模の流動性供給を行った際の年間推移と、BTC/ETHを単体で保有（ガチホ）した場合の比較データを公開します 。</p>
+        </div>
+
+        <h2>運用パフォーマンスの解説</h2>
+        <ul class="data-list">
+            <li><strong>流動性供給（評価額）:</strong> 1,000ドルから開始した運用の年間推移を確認できます 。</li>
+            <li><strong>手数料報酬:</strong> 運用期間中に積み上がった手数料報酬の累計です 。</li>
+            <li><strong>リポジション回数:</strong> レンジ幅（±5%）を外れて再設定を行った回数です 。</li>
+        </ul>
+
+        <h2>手数料報酬とレンジ設定の関係</h2>
+        <p>手数料報酬は、設定するレンジ幅によって変動します。本データでは±5%を基準としていますが、平均的な設定値に応じた報酬の目安は以下の通りです ：</p>
+        <ul class="data-list">
+            <li>平均 ±40%設定の場合：グラフ報酬の約 80% </li>
+            <li>平均 ±30%設定の場合：グラフ報酬の約 61% </li>
+            <li>平均 ±20%設定の場合：グラフ報酬の約 40% </li>
+            <li>平均 ±10%設定の場合：グラフ報酬の約 20% </li>
+        </ul>
+
+        <h2>運用の仕様について（CoinPool準拠）</h2>
+        <p>本運用はCoinPoolと同様の仕様で、1時間ごとにチャートを監視しています 。価格がレンジ幅を突破した時点で評価額を確定させ、その地点を中心に50:50の比率で再投資（リポジション）を行います 。</p>
+
+        <div class="note">
+            <p>※本数値にはスワップ手数料は含まれていません 。</p>
+            <p>※リポジション時や報酬引き出し時にはスワップ手数料が発生し、スリッページの影響を受ける可能性があります 。</p>
+        </div>
+    </div>
+</body>
+</html>

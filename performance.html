@@ -31,38 +31,27 @@
         .text-red { color: #ef4444; }
         .text-gold { color: #fbbf24; }
         
-        .chart-description { font-size: 0.85rem; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 6px; margin-bottom: 15px; line-height: 1.5; border-left: 3px solid #38bdf8;}
+        .chart-description { font-size: 0.85rem; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 6px; margin-bottom: 10px; line-height: 1.5; border-left: 3px solid #38bdf8; text-align: center;}
         .highlight-blue { color: #38bdf8; font-weight: bold; }
 
         .chart-wrapper { position: relative; height: 260px; width: 100%; margin-top: 5px; }
         .chart-wrapper.tall { height: 320px; }
 
-        /* --- ここが修正したテキストブロックのCSSです --- */
-        .conclusion-box { 
-            text-align: center; 
-            margin-top: 25px; 
-            padding: 25px 15px; /* 上下左右の余白を調整 */
-            background: rgba(251, 191, 36, 0.05); 
-            border: 1px dashed #fbbf24; 
-            border-radius: 10px; 
-        }
-        .conclusion-text { 
-            font-size: 1.1rem; 
-            color: #f1f5f9; 
-            line-height: 1.8; /* 行間を広げて読みやすく */
-        }
-        .conclusion-highlight { 
-            font-size: 2rem; 
-            font-weight: 900; 
-            color: #fbbf24; 
-            display: inline-block; 
-            margin: 10px 0; /* 上下の隙間を広げる */
-        }
-        /* ---------------------------------------------- */
+        .conclusion-box { text-align: center; margin-top: 25px; padding: 25px 10px; background: rgba(251, 191, 36, 0.05); border: 1px dashed #fbbf24; border-radius: 10px; }
+        .conclusion-text { font-size: 1.05rem; color: #f1f5f9; line-height: 1.6;}
+        .conclusion-highlight { font-size: 2rem; font-weight: 900; color: #fbbf24; display: inline-block; margin: 8px 0; letter-spacing: 1px;}
 
         .btn-link { display: block; width: 90%; max-width: 350px; margin: 40px auto; background: #38bdf8; color: #0f172a; padding: 15px 0; text-align: center; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3); }
         .note { font-size: 0.75rem; color: #64748b; text-align: center; margin-top: 20px;}
         .icon-stub { color: #38bdf8; }
+
+        /* 💡 不自然な改行を防ぐ魔法のクラス */
+        .keep-text { display: inline-block; }
+
+        /* 💡 カスタム凡例（ズレ防止） */
+        .custom-legend { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; font-size: 0.8rem; color: #cbd5e1; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-color { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -100,10 +89,15 @@
         </div>
         
         <div class="chart-description">
-            相場下落により<span class="highlight-blue">運用元本（青）</span>は最終的に目減りしていますが、途中のBTC上昇局面では<strong>元本単体でも初期資金の1,000ドルを上回る</strong>場面がありました。<br>
-            さらに、そこに圧倒的な<span class="text-gold" style="font-weight: bold;">手数料（黄）</span>が毎月積み上がることで、強固なプラス収益を形成しています。
+            <span class="keep-text">相場変動により</span><span class="highlight-blue keep-text">運用元本（青）</span><span class="keep-text">は増減しますが、</span><br>
+            <span class="keep-text">そこに圧倒的な</span><span class="text-gold keep-text" style="font-weight: bold;">手数料（黄）</span><span class="keep-text">が積み重なり、</span><br>
+            <span class="keep-text">強固なプラス収益を</span><span class="keep-text">形成しています。</span>
         </div>
 
+        <div class="custom-legend">
+            <div class="legend-item"><span class="legend-color" style="background: rgba(56, 189, 248, 0.8);"></span>運用元本（評価額）</div>
+            <div class="legend-item"><span class="legend-color" style="background: rgba(251, 191, 36, 0.9);"></span>累計手数料収益</div>
+        </div>
         <div class="chart-wrapper">
             <canvas id="coinPoolChart"></canvas>
         </div>
@@ -111,16 +105,20 @@
 
     <div class="card">
         <h2><span class="icon-stub">⚖️</span>パフォーマンス比較推移</h2>
+        
+        <div class="custom-legend" style="margin-top: 5px;">
+            <div class="legend-item"><span class="legend-color" style="background: #fbbf24;"></span>CoinPool型運用</div>
+            <div class="legend-item"><span class="legend-color" style="background: #ef4444;"></span>単純保有（ガチホ）</div>
+        </div>
         <div class="chart-wrapper tall">
             <canvas id="compareChart"></canvas>
         </div>
 
         <div class="conclusion-box">
             <div class="conclusion-text">
-                最初は同じスタート地点でしたが、<br>
-                時間の経過とともに<br>
+                <span class="keep-text">同一スタートから、</span><span class="keep-text">時間経過とともに</span><br>
                 <span class="conclusion-highlight">約 5.8倍</span><br>
-                という圧倒的な資産成長の差が生じました。
+                <span class="keep-text">の圧倒的な資産差が</span><span class="keep-text">生まれました。</span>
             </div>
         </div>
     </div>
@@ -136,8 +134,8 @@
 </div>
 
 <script>
+    // --- データの定義 ---
     const labels12m = ['開始', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
-    
     const holdData = [1000, 1050, 1100, 1250, 1150, 1000, 900, 850, 800, 750, 700, 680, 670]; 
     const principalData = [1000, 1040, 1080, 1200, 1100, 950, 850, 800, 750, 700, 650, 620, 603]; 
     const feeData = [0, 250, 500, 800, 1100, 1400, 1700, 2000, 2300, 2600, 2900, 3100, 3303];
@@ -147,7 +145,7 @@
 
     const commonOptions = {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, datalabels: { display: false } },
+        plugins: { legend: { display: false }, datalabels: { display: false } }, // 💡 Chart.js内蔵の凡例は非表示にする
         scales: {
             y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 6 } },
             x: { grid: { display: false }, ticks: { color: '#94a3b8', font: {size: 10}, maxRotation: 0 } }
@@ -163,13 +161,7 @@
 
     new Chart(ctxHold, {
         type: 'line',
-        data: {
-            labels: labels12m,
-            datasets: [{
-                data: holdData, borderColor: '#ef4444', backgroundColor: gradHold,
-                borderWidth: 2, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 10
-            }]
-        },
+        data: { labels: labels12m, datasets: [{ data: holdData, borderColor: '#ef4444', backgroundColor: gradHold, borderWidth: 2, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 10 }] },
         options: { ...commonOptions, scales: { ...commonOptions.scales, y: { ...commonOptions.scales.y, min: 500, max: 1500 } } }
     });
 
@@ -180,28 +172,12 @@
         data: {
             labels: labels12m,
             datasets: [
-                {
-                    label: '運用元本（評価額）', data: principalData,
-                    backgroundColor: 'rgba(56, 189, 248, 0.8)', barPercentage: 0.7
-                },
-                {
-                    label: '累計手数料収益', data: feeData,
-                    backgroundColor: 'rgba(251, 191, 36, 0.9)', borderRadius: { topLeft: 4, topRight: 4 }, barPercentage: 0.7
-                }
+                { label: '運用元本', data: principalData, backgroundColor: 'rgba(56, 189, 248, 0.8)', barPercentage: 0.7 },
+                { label: '手数料', data: feeData, backgroundColor: 'rgba(251, 191, 36, 0.9)', borderRadius: { topLeft: 4, topRight: 4 }, barPercentage: 0.7 }
             ]
         },
         options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { 
-                // ★凡例（ラベル）を左寄せに整列する修正
-                legend: { 
-                    display: true, 
-                    position: 'top', 
-                    align: 'start', // ここで左揃えにしています
-                    labels: { color: '#cbd5e1', font: { size: 11 }, boxWidth: 12, padding: 15 } 
-                }, 
-                datalabels: { display: false }
-            },
+            ...commonOptions,
             scales: {
                 x: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8', font: {size: 10}, maxRotation: 0, maxTicksLimit: 7 } },
                 y: { stacked: true, min: 0, max: 4500, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 6 } }
@@ -212,41 +188,24 @@
     // --- 3. 比較グラフ ---
     const ctxCompare = document.getElementById('compareChart').getContext('2d');
     const gradCompRed = ctxCompare.createLinearGradient(0, 0, 0, 320);
-    gradCompRed.addColorStop(0, 'rgba(239, 68, 68, 0.5)');
-    gradCompRed.addColorStop(1, 'rgba(239, 68, 68, 0)');
+    gradCompRed.addColorStop(0, 'rgba(239, 68, 68, 0.5)'); gradCompRed.addColorStop(1, 'rgba(239, 68, 68, 0)');
     const gradCompGold = ctxCompare.createLinearGradient(0, 0, 0, 320);
-    gradCompGold.addColorStop(0, 'rgba(251, 191, 36, 0.5)');
-    gradCompGold.addColorStop(1, 'rgba(251, 191, 36, 0)');
+    gradCompGold.addColorStop(0, 'rgba(251, 191, 36, 0.5)'); gradCompGold.addColorStop(1, 'rgba(251, 191, 36, 0)');
 
     new Chart(ctxCompare, {
         type: 'line',
         data: {
             labels: labels12m,
             datasets: [
-                {
-                    label: 'CoinPool型運用', data: totalPoolData,
-                    borderColor: '#fbbf24', backgroundColor: gradCompGold,
-                    borderWidth: 3, fill: true, tension: 0.3, pointRadius: 2, pointBackgroundColor: '#fbbf24', order: 1
-                },
-                {
-                    label: '単純保有（ガチホ）', data: holdData,
-                    borderColor: '#ef4444', backgroundColor: gradCompRed,
-                    borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2, pointBackgroundColor: '#ef4444', order: 2
-                }
+                { label: 'CoinPool', data: totalPoolData, borderColor: '#fbbf24', backgroundColor: gradCompGold, borderWidth: 3, fill: true, tension: 0.3, pointRadius: 2, pointBackgroundColor: '#fbbf24', order: 1 },
+                { label: 'ガチホ', data: holdData, borderColor: '#ef4444', backgroundColor: gradCompRed, borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2, pointBackgroundColor: '#ef4444', order: 2 }
             ]
         },
         options: {
             responsive: true, maintainAspectRatio: false,
-            // ★右端の数字($3,906など)が見切れないように右(right)に余白(60)を追加しました
             layout: { padding: { top: 35, right: 60, bottom: 15 } },
             plugins: {
-                // ★こちらの凡例も左寄せに修正
-                legend: { 
-                    display: true, 
-                    position: 'top', 
-                    align: 'start',
-                    labels: { color: '#cbd5e1', font: { size: 12 }, boxWidth: 15, padding: 15 } 
-                },
+                legend: { display: false }, // 💡 内蔵凡例は非表示
                 tooltip: { callbacks: { label: function(context) { return context.dataset.label + ': $' + context.raw.toLocaleString(); } } },
                 datalabels: {
                     display: function(context) { return context.dataIndex === context.dataset.data.length - 1; },
@@ -260,7 +219,8 @@
             scales: {
                 y: { min: 0, max: 4800, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 6 } },
                 x: { grid: { display: false }, ticks: { color: '#cbd5e1', font: { size: 10 }, maxRotation: 0 } }
-            }
+            },
+            interaction: { mode: 'index', intersect: false }
         }
     });
 </script>

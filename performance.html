@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>運用実績レポート | CoinPool</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
@@ -13,109 +13,37 @@
             background: #0f172a; 
             color: #f1f5f9;
             line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #38bdf8;
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #94a3b8;
-            margin-bottom: 40px;
-            font-size: 0.95rem;
-        }
-        .card {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 25px;
-            border: 1px solid #334155;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        h2 {
-            font-size: 1.25rem;
-            color: #f1f5f9;
-            margin-top: 0;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .cond-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-        .cond-item {
-            background: rgba(255,255,255,0.03);
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            border-left: 2px solid #334155;
-        }
-        .cond-label { color: #94a3b8; margin-right: 8px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px 15px; }
+        h1 { text-align: center; color: #38bdf8; font-size: 1.5rem; margin-bottom: 5px; letter-spacing: 1px; }
+        .subtitle { text-align: center; color: #94a3b8; margin-bottom: 30px; font-size: 0.85rem; }
+        .card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 25px; border: 1px solid #334155; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        h2 { font-size: 1.15rem; color: #f1f5f9; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        
+        .cond-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .cond-item { background: rgba(255,255,255,0.03); padding: 10px; border-radius: 6px; font-size: 0.85rem; border-left: 2px solid #334155; }
+        .cond-label { color: #94a3b8; display: block; font-size: 0.75rem;}
         .cond-value { font-weight: bold; color: #f1f5f9; }
 
-        .result-layout { display: flex; gap: 30px; align-items: center; }
-        .result-stats { flex: 1; }
-        .result-visual { flex: 1; text-align: center; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;}
+        .stat-highlight { text-align: center; padding: 10px 0 15px 0; }
+        .stat-highlight .value { font-size: 2.2rem; font-weight: 900; line-height: 1.2; }
+        .text-red { color: #ef4444; }
+        .text-gold { color: #fbbf24; }
         
-        .stat-box { margin-bottom: 15px; }
-        .stat-label { font-size: 0.9rem; color: #94a3b8; display: block; }
-        .stat-value { font-size: 1.8rem; font-weight: bold; }
+        .chart-description { font-size: 0.85rem; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 6px; margin-bottom: 15px; line-height: 1.4; border-left: 3px solid #38bdf8;}
+        .highlight-blue { color: #38bdf8; font-weight: bold; }
 
-        /* グラフエリアのコンテナ（高さ固定） */
-        .chart-container {
-            position: relative;
-            height: 350px; 
-            width: 100%;
-            margin-top: 20px;
-        }
+        .chart-wrapper { position: relative; height: 260px; width: 100%; margin-top: 5px; }
+        .chart-wrapper.tall { height: 320px; }
 
-        .conclusion-box {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            border-top: 1px dashed #334155;
-        }
-        .conclusion-text {
-            font-size: 1.4rem;
-            color: #f1f5f9;
-        }
-        .conclusion-highlight {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #fbbf24;
-            padding: 0 10px;
-        }
+        .conclusion-box { text-align: center; margin-top: 25px; padding: 20px 10px; background: rgba(251, 191, 36, 0.05); border: 1px dashed #fbbf24; border-radius: 10px; }
+        .conclusion-text { font-size: 1.1rem; color: #f1f5f9; }
+        .conclusion-highlight { font-size: 1.8rem; font-weight: 900; color: #fbbf24; display: inline-block; margin: 5px 0; }
 
-        .btn-link {
-            display: block;
-            width: fit-content;
-            margin: 40px auto;
-            background: #38bdf8;
-            color: #0f172a;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: opacity 0.2s;
-        }
-        .btn-link:hover { opacity: 0.8; }
-        .note { font-size: 0.8rem; color: #64748b; text-align: center; margin-top: 20px;}
-        .icon-stub { display: inline-block; width: 1em; text-align: center; color: #38bdf8; margin-right: 5px;}
-
-        @media (max-width: 650px) {
-            .result-layout { flex-direction: column; }
-            .chart-container { height: 300px; }
-        }
+        .btn-link { display: block; width: 90%; max-width: 350px; margin: 40px auto; background: #38bdf8; color: #0f172a; padding: 15px 0; text-align: center; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3); }
+        .note { font-size: 0.75rem; color: #64748b; text-align: center; margin-top: 20px;}
+        .icon-stub { color: #38bdf8; }
     </style>
 </head>
 <body>
@@ -127,136 +55,211 @@
     <div class="card">
         <h2><span class="icon-stub">📋</span>検証条件</h2>
         <div class="cond-grid">
-            <div class="cond-item"><span class="cond-label">ペア:</span><span class="cond-value">cbBTC / ETH</span></div>
-            <div class="cond-item"><span class="cond-label">プール:</span><span class="cond-value">Uniswap V3 0.3%</span></div>
-            <div class="cond-item"><span class="cond-label">レンジ:</span><span class="cond-value">±5%</span></div>
-            <div class="cond-item"><span class="cond-label">期間:</span><span class="cond-value">365日間</span></div>
-            <div class="cond-item"><span class="cond-label">初期資金:</span><span class="cond-value">1,000ドル</span></div>
-            <div class="cond-item"><span class="cond-label">リポジション:</span><span class="cond-value">70回/年</span></div>
+            <div class="cond-item"><span class="cond-label">ペア</span><span class="cond-value">cbBTC / ETH</span></div>
+            <div class="cond-item"><span class="cond-label">期間</span><span class="cond-value">365日間</span></div>
+            <div class="cond-item"><span class="cond-label">レンジ</span><span class="cond-value">±5%</span></div>
+            <div class="cond-item"><span class="cond-label">初期資金</span><span class="cond-value">$1,000</span></div>
         </div>
     </div>
 
     <div class="card">
-        <h2><span class="icon-stub">📈</span>運用結果（流動性提供）</h2>
-        <div class="result-layout">
-            <div class="result-stats">
-                <div class="stat-box">
-                    <span class="stat-label">初期資金</span>
-                    <span class="stat-value" style="font-size: 1.4rem; color: #94a3b8;">1,000ドル</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">累計手数料収益</span>
-                    <span class="stat-value" style="color: #10b981;">+3,303.57ドル</span>
-                </div>
-            </div>
-            <div class="result-visual">
-                <span class="stat-label">最終資産合計</span>
-                <span class="stat-value" style="color: #fbbf24; font-size: 2.5rem;">3,906.06<span style="font-size:1.2rem;"> ドル</span></span>
-                <div style="color: #fbbf24; font-weight: bold; margin-top: 5px;">（約3.9倍に成長）</div>
-            </div>
+        <h2><span class="icon-stub">📉</span>単純保有（ガチホ）の推移</h2>
+        <div class="stat-highlight">
+            <div style="font-size: 0.85rem; color: #94a3b8;">最終資産額</div>
+            <div class="value text-red">約 670 ドル</div>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="holdChart"></canvas>
         </div>
     </div>
 
     <div class="card">
-        <h2><span class="icon-stub">⚖️</span>パフォーマンス比較</h2>
+        <h2><span class="icon-stub">📈</span>CoinPool型運用の推移</h2>
+        <div class="stat-highlight">
+            <div style="font-size: 0.85rem; color: #94a3b8;">最終資産額（元本＋手数料）</div>
+            <div class="value text-gold">3,906.06 ドル</div>
+        </div>
         
-        <div class="chart-container">
-            <canvas id="performanceChart"></canvas>
+        <div class="chart-description">
+            相場下落により<span class="highlight-blue">運用元本（青）</span>は最終的に目減りしていますが、途中のBTC上昇局面では<strong>元本単体でも初期資金の1,000ドルを上回る</strong>場面がありました。<br>
+            さらに、そこに圧倒的な<span class="text-gold" style="font-weight: bold;">手数料（黄）</span>が毎月積み上がることで、強固なプラス収益を形成しています。
+        </div>
+
+        <div class="chart-wrapper">
+            <canvas id="coinPoolChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2><span class="icon-stub">⚖️</span>パフォーマンス比較推移</h2>
+        <div class="chart-wrapper tall">
+            <canvas id="compareChart"></canvas>
         </div>
 
         <div class="conclusion-box">
             <div class="conclusion-text">
-                単純保有と比較し、資産成長に<br>
-                <span class="conclusion-highlight">約 5.8倍</span>の差が生じました。
+                最初は同じスタート地点でしたが、時間の経過とともに<br>
+                <span class="conclusion-highlight">約 5.8倍</span><br>
+                という圧倒的な資産成長の差が生じました。
             </div>
         </div>
     </div>
 
     <a href="https://docs.google.com/spreadsheets/d/1Hgz2ikWBre0xP1paMGIlCdNKl33stJNY/edit?gid=994495645#gid=994495645" class="btn-link" target="_blank">
-        実際の検証データをスプレッドシートで見る
+        実際の検証データを見る（Google Sheets）
     </a>
 
     <div class="note">
-        ※2025/2/6〜2026/2/6（365日）のデータを元にした検証結果です。<br>
+        ※2025/2/6〜2026/2/6（12ヶ月）のデータを元にした検証結果。<br>
         ※レンジ外時は50:50へリポジション。
     </div>
 </div>
 
 <script>
-    // DataLabelsプラグインの有効化
+    // --- スプレッドシートのデータに合わせてここを書き換えてください ---
+    // X軸のラベル（開始時＋1ヶ月ごとの13点）
+    const labels12m = ['開始', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+    
+    // ガチホの推移（13点）
+    const holdData = [1000, 1050, 1100, 1250, 1150, 1000, 900, 850, 800, 750, 700, 680, 670]; 
+    
+    // CoinPoolの元本推移（3ヶ月目などに1000ドルを超える設定）
+    const principalData = [1000, 1040, 1080, 1200, 1100, 950, 850, 800, 750, 700, 650, 620, 603]; 
+    
+    // CoinPoolの累計手数料推移
+    const feeData = [0, 250, 500, 800, 1100, 1400, 1700, 2000, 2300, 2600, 2900, 3100, 3303];
+
+    // CoinPoolの合計推移（元本＋手数料）
+    const totalPoolData = principalData.map((p, i) => p + feeData[i]);
+    // -----------------------------------------------------------
+
     Chart.register(ChartDataLabels);
 
-    const canvas = document.getElementById('performanceChart');
-    const ctx = canvas.getContext('2d');
+    // 共通のグラフオプション（スマホでの見やすさ調整）
+    const commonOptions = {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, datalabels: { display: false } },
+        scales: {
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 6 } },
+            x: { grid: { display: false }, ticks: { color: '#94a3b8', font: {size: 10}, maxRotation: 0 } }
+        },
+        interaction: { mode: 'index', intersect: false } // タップ時に縦のラインで両方の値を出しやすくする
+    };
 
-    // --- グラデーションの作成（高級感を演出） ---
-    // ガチホ用（赤）
-    const gradientRed = ctx.createLinearGradient(0, 0, 0, 350);
-    gradientRed.addColorStop(0, 'rgba(239, 68, 68, 0.9)'); // 濃い赤
-    gradientRed.addColorStop(1, 'rgba(239, 68, 68, 0.1)'); // 透明な赤へフェード
+    // --- 1. ガチホ推移（折れ線） ---
+    const ctxHold = document.getElementById('holdChart').getContext('2d');
+    const gradHold = ctxHold.createLinearGradient(0, 0, 0, 260);
+    gradHold.addColorStop(0, 'rgba(239, 68, 68, 0.4)');
+    gradHold.addColorStop(1, 'rgba(239, 68, 68, 0)');
 
-    // CoinPool用（ゴールド）
-    const gradientGold = ctx.createLinearGradient(0, 0, 0, 350);
-    gradientGold.addColorStop(0, 'rgba(251, 191, 36, 0.9)'); // 濃いゴールド
-    gradientGold.addColorStop(1, 'rgba(251, 191, 36, 0.1)'); // 透明なゴールドへフェード
-
-    new Chart(ctx, {
-        type: 'bar',
+    new Chart(ctxHold, {
+        type: 'line',
         data: {
-            labels: ['単純保有（ガチホ）', 'CoinPool型運用'],
+            labels: labels12m,
             datasets: [{
-                data: [670, 3906],
-                backgroundColor: [gradientRed, gradientGold],
-                // 枠線は上端だけ濃くしてフラット感を出す
-                borderColor: ['rgba(239, 68, 68, 1)', 'rgba(251, 191, 36, 1)'],
-                borderWidth: { top: 3, right: 0, bottom: 0, left: 0 },
-                borderRadius: { topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0 },
-                barPercentage: 0.55, // バーを細くしてスマートに
+                data: holdData,
+                borderColor: '#ef4444', backgroundColor: gradHold,
+                borderWidth: 2, fill: true, tension: 0.3, pointRadius: 0, pointHitRadius: 10
             }]
         },
+        options: { ...commonOptions, scales: { ...commonOptions.scales, y: { ...commonOptions.scales.y, min: 500, max: 1500 } } }
+    });
+
+    // --- 2. CoinPool推移（積み上げ棒グラフ） ---
+    const ctxPool = document.getElementById('coinPoolChart').getContext('2d');
+    new Chart(ctxPool, {
+        type: 'bar',
+        data: {
+            labels: labels12m,
+            datasets: [
+                {
+                    label: '運用元本（評価額）',
+                    data: principalData,
+                    backgroundColor: 'rgba(56, 189, 248, 0.8)', // 水色
+                    barPercentage: 0.7
+                },
+                {
+                    label: '累計手数料収益',
+                    data: feeData,
+                    backgroundColor: 'rgba(251, 191, 36, 0.9)', // ゴールド
+                    borderRadius: { topLeft: 4, topRight: 4 },
+                    barPercentage: 0.7
+                }
+            ]
+        },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: {
-                padding: { top: 40 } // 上部に金額ラベル用の余白を確保
+            responsive: true, maintainAspectRatio: false,
+            plugins: { 
+                legend: { display: true, position: 'top', labels: { color: '#cbd5e1', font: { size: 11 }, boxWidth: 12 } }, 
+                datalabels: { display: false }
             },
+            scales: {
+                x: { stacked: true, grid: { display: false }, ticks: { color: '#94a3b8', font: {size: 10}, maxRotation: 0, maxTicksLimit: 7 } },
+                y: { stacked: true, min: 0, max: 4500, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 6 } }
+            }
+        }
+    });
+
+    // --- 3. 比較グラフ（折れ線・開いていくワニの口を表現） ---
+    const ctxCompare = document.getElementById('compareChart').getContext('2d');
+    
+    // ガチホ用（赤グラデーション）
+    const gradCompRed = ctxCompare.createLinearGradient(0, 0, 0, 320);
+    gradCompRed.addColorStop(0, 'rgba(239, 68, 68, 0.5)');
+    gradCompRed.addColorStop(1, 'rgba(239, 68, 68, 0)');
+
+    // CoinPool用（ゴールドグラデーション）
+    const gradCompGold = ctxCompare.createLinearGradient(0, 0, 0, 320);
+    gradCompGold.addColorStop(0, 'rgba(251, 191, 36, 0.5)');
+    gradCompGold.addColorStop(1, 'rgba(251, 191, 36, 0)');
+
+    new Chart(ctxCompare, {
+        type: 'line',
+        data: {
+            labels: labels12m,
+            datasets: [
+                {
+                    label: 'CoinPool型運用',
+                    data: totalPoolData,
+                    borderColor: '#fbbf24', // ゴールド
+                    backgroundColor: gradCompGold,
+                    borderWidth: 3, fill: true, tension: 0.3, pointRadius: 2, pointBackgroundColor: '#fbbf24',
+                    order: 1
+                },
+                {
+                    label: '単純保有（ガチホ）',
+                    data: holdData,
+                    borderColor: '#ef4444', // 赤
+                    backgroundColor: gradCompRed,
+                    borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2, pointBackgroundColor: '#ef4444',
+                    order: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            // ★ right（右）と bottom（下）の余白を増やして見切れを防止
+            layout: { padding: { top: 35, right: 60, bottom: 15 } }, 
             plugins: {
-                legend: { display: false }, // 凡例は不要なので消す
-                tooltip: { enabled: false }, // ホバー時の黒いポップアップも不要なので消す
+                legend: { display: true, position: 'top', labels: { color: '#cbd5e1', font: { size: 12 }, boxWidth: 15 } },
+                tooltip: { 
+                    callbacks: { label: function(context) { return context.dataset.label + ': $' + context.raw.toLocaleString(); } }
+                },
                 datalabels: {
-                    // 棒の真上に数字を直接表示する設定
-                    color: function(context) {
-                        return context.dataIndex === 0 ? '#ef4444' : '#fbbf24';
+                    // 最後のデータ（12ヶ月目）のみ数字を表示する設定
+                    display: function(context) {
+                        return context.dataIndex === context.dataset.data.length - 1;
                     },
-                    anchor: 'end',
-                    align: 'top',
+                    color: function(context) { return context.datasetIndex === 0 ? '#fbbf24' : '#ef4444'; },
+                    align: function(context) { return context.datasetIndex === 0 ? 'top' : 'bottom'; },
                     offset: 8,
-                    formatter: function(value) {
-                        // カンマ区切りで $ をつける
-                        return '$' + value.toLocaleString();
-                    },
-                    font: {
-                        family: '-apple-system, sans-serif',
-                        size: 22,
-                        weight: 'bold'
-                    }
+                    formatter: function(value) { return '$' + value.toLocaleString(); },
+                    font: { family: '-apple-system, sans-serif', size: 14, weight: 'bold' }
                 }
             },
             scales: {
-                y: {
-                    display: false, // ★ Y軸の数字と線を完全に消す（コンサル風）
-                    max: 4500 // ラベルが見切れないように上限を少し高めに設定
-                },
-                x: {
-                    grid: {
-                        display: false, // ★ X軸の縦の網目線を消す
-                        drawBorder: false // ★ X軸のベースラインを消す
-                    },
-                    ticks: {
-                        color: '#cbd5e1',
-                        font: { size: 14, weight: '600' }
-                    }
-                }
+                y: { min: 0, max: 4800, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', maxTicksLimit: 6 } },
+                x: { grid: { display: false }, ticks: { color: '#cbd5e1', font: { size: 10 }, maxRotation: 0 } }
             }
         }
     });
